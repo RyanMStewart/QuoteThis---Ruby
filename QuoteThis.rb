@@ -81,16 +81,17 @@ end
 	puts stock_to_lookup.worth
 
 	# Basic information needed to communicate with Twilio SMS server and send a message
+	# in 'TwilioAuthTokens.rb' set ENV variables with account information from Twilio to access info safely
 
-account_sid = ENV["account_sid"] # Your Account SID from www.twilio.com/console
-auth_token = ENV["auth_token"]   # Your Auth Token from www.twilio.com/console
+account_sid = ENV["account_sid"] # Your Account sid from ENV variable held in 'TwilioAuthTokens.rb'
+auth_token = ENV["auth_token"]   # Your Auth Token from ENV in 'TwilioAuthTokens.rb'
 
 
 @client = Twilio::REST::Client.new account_sid, auth_token
 message = @client.messages.create(
 		body: (stock_to_lookup.worth),
-		to: ENV["myNum"],    # Replace with your phone number
-		from: ENV["twilioNum"])  # Replace with your Twilio number
+		to: ENV["myNum"],    # Replace with your ENV variable holding your phone number
+		from: ENV["twilioNum"])  # Replace with your ENV variable holding Twilio account phone number
 
 puts message.sid
 
