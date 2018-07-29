@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'twilio-ruby'
+require_relative 'TwilioAuthTokens'
 
 # Establish the class that will create and modify a stock object
 
@@ -33,7 +34,7 @@ class Stock
 	
 	def download_webpage
 		
-			uri = URI('http://www.nasdaq.com/symbol/' + @symbol + '/real-time')
+			uri = URI('https://www.nasdaq.com/symbol/' + @symbol + '/real-time')
 			@quote = Net::HTTP.get(uri)
 		
 	end
@@ -53,7 +54,6 @@ class Stock
 	# In order to make the price presentable I have to delete the extra characters at the beginning of the price.
 	
 	def format_quote
-		
 		@final_quote = @number.delete('"\">$')
 		return @final_quote
 	end
@@ -79,23 +79,22 @@ end
 	stock_to_lookup.scan_quote
 	stock_to_lookup.format_quote
 	puts stock_to_lookup.worth
-end
 
 	# Basic information needed to communicate with Twilio SMS server and send a message
-	secretfunction = <<-END
-	account_sid = "GetTokenFromFile" 
-	auth_token = "GetTokenFromFile"
-			
-	@client = Twilio::REST::Client.new account_sid, auth_token
-	
-			
-	message = @client.account.messages.create(
-									:body => stock_to_lookup.worth,
-									:to => "+MyPhoneNumber",
-									:from => "TwilioSmsNumber")
-	
-	puts message.sid
-END
+
+account_sid = ENV["account_sid"] # Your Account SID from www.twilio.com/console
+auth_token = ENV["auth_token"]   # Your Auth Token from www.twilio.com/console
+
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+message = @client.messages.create(
+		body: (stock_to_lookup.worth),
+		to: ENV["myNum"],    # Replace with your phone number
+		from: ENV["twilioNum"])  # Replace with your Twilio number
+
+puts message.sid
+
+	end
 
 loop do
 	puts %q^Please select an option:
