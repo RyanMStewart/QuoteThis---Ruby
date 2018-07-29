@@ -1,1 +1,8 @@
 TwilioTest.rb
+MessageSender.rb
+TwilioAuthentication.rb
+TwilioMessageSender.rb
+TwilTest.rb
+*.idea
+TwilioAuthTokens.rb
+.DS_Store
