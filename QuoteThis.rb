@@ -8,13 +8,10 @@ require_relative 'TwilioAuthTokens'
 
 class Stock
 	
-	# It is not necessary to declare this module in the class as it is already 'called' into the 'http' included file
-	# but I like to remind myself that I am using a mixin within a class method
-	
 	module URI
 	end
 	 
-	# These values need to be accessable to the different methods throughout the class
+	# These values need to be accessible to the different methods throughout the class
 	
 	attr_accessor :symbol, :quote, :number, :final_quote, :mess
 	 
@@ -30,7 +27,7 @@ class Stock
 		
 	end
 	
-	# Using the URI module here to pull a webpage off the internet and assign it to '@quote' as a string
+	# Using the URI module here to pull a web page off the internet and assign it to '@quote' as a string
 	
 	def download_webpage
 		
@@ -40,7 +37,7 @@ class Stock
 	end
 	
 	# This is where I use a regexp to find the price of the symbol.
-	# Had to read the html of the webpage and find the combination of characters that indicate the price.
+	# Had to read the html of the web page and find the combination of characters that indicate the price.
 	# In this case the quote is always proceeded by "\>$" so I search for that combo of characters and then a price which is \d+\.\d+
 	# The first element in the array is the price I'm looking for..
 	
